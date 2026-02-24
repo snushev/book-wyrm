@@ -1,6 +1,13 @@
-<h1>{{ book.title }}                                                          <a href="{% url 'add-review' book.pk %}">
-    <button type="button">Create a review</button>
-</a></h1>
+{% extends "common/base.html" %}
+
+{% block title %}Book Details{% endblock title %}
+
+
+{% block content %}
+<h1>{{ book.title }}</h1>        
+    <br>                                         
+    <a href="{% url 'add-review' book.pk %}" class="px-6 py-3 text-blue-100 no-underline bg-blue-500 rounded hover:bg-blue-600 hover:underline hover:text-blue-200">Create a review</a>  
+    <br><br>
 <ul>
 <li>Book author: {{ book.author }}</li>
 <li>Book description: {{ book.description }}</li>
@@ -24,3 +31,4 @@
         There are no reviews for this book yet.
         {% endfor %}
 </ul>
+{% endblock content %}

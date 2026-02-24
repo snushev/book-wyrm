@@ -1,5 +1,12 @@
+{% extends "common/base.html" %}
+
+{% block title %}Add Review{% endblock title %}
+
+
+{% block content %}
 <form method='POST'>
     {% csrf_token %}
     {{ form.as_p }}
     <button>Publish review</button>
 </form>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BookWyrm{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    {% include "common/nav.html" %}
+
+    <main class="container mx-auto mt-8 p-4 bg-white shadow-md rounded-lg">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="text-center mt-10 p-4 text-gray-500 text-sm">
+        &copy; 2026 BookWyrm Project - Django Practice
+    </footer>
+
+</body>
+</html>

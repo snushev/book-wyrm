@@ -1,13 +1,19 @@
+{% extends "common/base.html" %}
+
+{% block title %}Book List{% endblock title %}
+
+{% block content %}
+
 <ul> 
-    <!-- Iterate over object_list -->
+
     {% for book in books %} 
-    <!-- Display Objects -->
-    <li>{{ book.title }}</li> 
+
+    <li><a href="{% url 'book-detail' book.pk %}">{{ book.title }}</li> 
     <li>{{ book.author }}</li> 
   
     <hr/> 
-    <!-- If object_list is empty  -->
     {% empty %} 
     <li>No objects yet.</li> 
     {% endfor %} 
 </ul> 
+{% endblock %}

@@ -37,4 +37,7 @@ class Review(models.Model):
     rating = models.IntegerField(choices=RATING_CHOICES)
     publication_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.book.title + " by " + self.user.username
+
     

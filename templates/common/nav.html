@@ -1,0 +1,13 @@
+<nav class="bg-blue-600 p-4 text-white shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'book-list' %}" class="text-2xl font-bold">📚 BookWyrm</a>
+            <div>
+                {% if user.is_authenticated %}
+                    <span class="mr-4">Hello, {{ user.username }}!</span>
+                    <a href="#" class="bg-red-500 px-3 py-1 rounded">Exit</a>
+                {% else %}
+                    <a href="#" class="bg-green-500 px-3 py-1 rounded">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
