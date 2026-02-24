@@ -1,0 +1,26 @@
+<h1>{{ book.title }}                                                          <a href="{% url 'add-review' book.pk %}">
+    <button type="button">Create a review</button>
+</a></h1>
+<ul>
+<li>Book author: {{ book.author }}</li>
+<li>Book description: {{ book.description }}</li>
+<li>Book genre: {{ book.genre }}</li>
+    <ul>
+        {% for review in book.reviews.all %}
+        <li><strong>{{ review.user.username }}</strong>
+            <ul>
+            <li>
+                 gave rating {{ review.rating }}
+            </li>
+            <li>
+                <p>Review: {{ review.review }}</p>
+            </li>
+            <li>
+                <small>Publicated at: {{ review.publication_date }}</small>
+            </li>
+        </ul>
+        </li>
+        {% empty %}
+        There are no reviews for this book yet.
+        {% endfor %}
+</ul>
