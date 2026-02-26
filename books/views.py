@@ -18,6 +18,15 @@ class BookDetailView(DetailView):
     template_name = 'books/book_detail.html'
     context_object_name = 'book'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user_has_reviewed'] = Review.objects.filter(
+                book=self.get_object(),
+                user=self.request.user
+            ).exists()
+        return context
+
 # Review views
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):

@@ -1,14 +1,53 @@
 {% extends "common/base.html" %}
 
-{% block title %}Sign up{% endblock title %}
+{% block title %}Login{% endblock title %}
 
 {% block content %}
-<form method="POST" class="space-y-4">
-    {% csrf_token %}
+<div class="flex justify-center items-center py-10">
+    <div class="w-full max-w-xs">
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-gray-200" method="POST">
+            {% csrf_token %}
+            
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Log in</h2>
 
-    {{ form.as_p }}
-    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Sign Up</button>
-</form>
-<p class="mt-4">Already have an account? <a href="{% url 'login' %}" class="text-blue-500">Sign in here</a></p>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                    Username
+                </label>
+                <div class="[&>input]:shadow [&>input]:appearance-none [&>input]:border [&>input]:rounded [&>input]:w-full [&>input]:py-2 [&>input]:px-3 [&>input]:text-gray-700 [&>input]:leading-tight [&>input]:focus:outline-none [&>input]:focus:shadow-outline">
+                    {{ form.username }}
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                    Password
+                </label>
+                <div class="[&>input]:shadow [&>input]:appearance-none [&>input]:border [&>input]:rounded [&>input]:w-full [&>input]:py-2 [&>input]:px-3 [&>input]:text-gray-700 [&>input]:leading-tight [&>input]:focus:outline-none [&>input]:focus:shadow-outline">
+                    {{ form.password1 }}
+                </div>
+                
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                    Re-type Password
+                </label>
+                <div class="[&>input]:shadow [&>input]:appearance-none [&>input]:border [&>input]:rounded [&>input]:w-full [&>input]:py-2 [&>input]:px-3 [&>input]:text-gray-700 [&>input]:leading-tight [&>input]:focus:outline-none [&>input]:focus:shadow-outline">
+                    {{ form.password2 }}
+                </div>
+                
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition" type="submit">
+                    Sign In
+                </button>
+                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{% url 'signup' %}">
+                    Sing Up
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock content %}
-

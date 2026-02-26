@@ -4,16 +4,46 @@
 
 {% block content %}
 
-<ul> 
-
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
     {% for book in books %} 
 
-    <li><a href="{% url 'book-detail' book.pk %}">{{ book.title }}</li> 
-    <li>{{ book.author }}</li> 
-  
-    <hr/> 
+        <div class="flex flex-col md:flex-row gap-8">
+    <div class="w-full md:w-1/3 lg:w-1/4 shrink-0">
+        {% if book.cover %}
+            <img src="{{ book.cover.url }}" alt="{{ book.title }}" 
+                 class="rounded-lg shadow-md border-4 border-white w-full h-auto object-cover">
+        {% else %}
+            <div class="bg-gray-200 w-full h-64 rounded-lg flex items-center justify-center text-gray-400 italic">
+                No cover available
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="w-full md:w-3/4">
+        <h1 class="text-4xl font-black text-gray-800 mb-2">{{ book.title }}</h1>
+        <p class="text-xl text-blue-600 mb-4 font-semibold">by {{ book.author }}</p>
+        
+        <div class="bg-blue-50 p-4 rounded-md mb-6 border-l-4 border-blue-500">
+            <h3 class="font-bold text-blue-800 uppercase text-xs mb-1">Description: </h3>
+            <p class="text-gray-700 leading-relaxed">{{ book.description }}</p>
+        </div>
+        
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+            #{{ book.genre }}
+        </span>
+        <div>   
+            <a href="{% url 'book-detail' book.pk %}" 
+                           class="inline-block text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition no-underline">
+                            Details
+                        </a>
+                    </div>
+    </div>
+</div>
+
     {% empty %} 
-    <li>No objects yet.</li> 
+         <h5 class="mb-3 text-2xl font-semibold tracking-tight rounded text-heading leading-8">No objects yet.</h5>
     {% endfor %} 
-</ul> 
+    </div>
 {% endblock %}
+
+
