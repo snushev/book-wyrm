@@ -1,7 +1,9 @@
 from django.shortcuts import render, reverse
-from django.views.generic import ListView, DetailView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Book, Review, Genre
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
+from .models import Book, Review
 from .forms import ReviewForm
 
 # Create your views here.
@@ -46,3 +48,26 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         pk = self.object.book.pk
         return reverse('book-detail', kwargs={'pk': pk})
+    
+class ReviewUpdateView(UserPassesTestMixin, UpdateView):
+    model = Review
+    fields = ["review", "rating"]
+    template_name = "books/create_review.html"
+    
+    def get_success_url(self):
+        return reverse('book-detail', kwargs={'pk': self.object.book.pk})
+    
+    def test_func(self):
+        review = self.get_object()
+        return self.request.user == review.user
+    
+class ReviewDeleteView(UserPassesTestMixin, DeleteView):
+    model = Review
+    template_name = "books/delete_review.html"
+
+    def get_success_url(self):
+        return reverse('book-detail', kwargs={'pk': self.object.book.pk})
+    
+    def test_func(self):
+        review = self.get_object()
+        return self.request.user == review.user

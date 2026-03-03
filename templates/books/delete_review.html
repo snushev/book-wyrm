@@ -1,0 +1,33 @@
+{% extends "common/base.html" %}
+
+{% block title %}Delete Review{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center py-20 px-4">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-red-50 p-10 text-center">
+        <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-100 mb-6 border-4 border-white shadow-sm">
+            <span class="text-4xl">⚠️</span>
+        </div>
+
+        <h2 class="text-2xl font-black text-gray-900 mb-3 text-red-600">Are you sure?</h2>
+        <p class="text-gray-500 mb-8 leading-relaxed">
+            You are about to delete your review for <br>
+            <span class="font-bold text-gray-800 italic">"{{ object.book.title }}"</span>. <br>
+            This action is permanent.
+        </p>
+
+        <form method="POST" class="space-y-3">
+            {% csrf_token %}
+            
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-2xl transition shadow-xl shadow-red-200">
+                Yes, Delete Review
+            </button>
+
+            <a href="{% url 'book-detail' object.book.pk %}" 
+               class="block w-full bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold py-3 px-6 rounded-2xl transition no-underline">
+                No, Go Back
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

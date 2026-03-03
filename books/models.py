@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.functions import Coalesce
 
 # Create your models here.
 
@@ -16,6 +17,15 @@ class Book(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name='books')
     cover = models.ImageField(upload_to='covers', null=True, blank=True)
 
+    def rating_avg(self):
+        return Review.objects.filter(book=self).aggregate(
+            avg=Coalesce(
+                models.Avg('rating'), 
+                0.0,
+                output_field=models.FloatField()
+            )
+        )['avg']
+
     def __str__(self):
         return self.title
 
@@ -23,13 +33,13 @@ class Review(models.Model):
     class Meta:
         unique_together = ('book', 'user')
 
-    RATING_CHOICES = {
-        1: 1,     
-        2: 2,     
-        3: 3,     
-        4: 4,     
-        5: 5,     
-    }
+    RATING_CHOICES = [
+        (1, "1"),     
+        (2, "2"),     
+        (3, "3"),     
+        (4, "4"),     
+        (5, "5"),     
+    ]
 
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
