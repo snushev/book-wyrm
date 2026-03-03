@@ -1,15 +1,16 @@
+
 {% extends "common/base.html" %}
 
-{% block title %}{% if object %}Edit{% else %}Add{% endif %} Review{% endblock %}
+{% block title %}Add Book{% endblock %}
 
 {% block content %}
 <div class="max-w-2xl mx-auto py-12 px-4">
     <div class="bg-white shadow-2xl rounded-2xl p-8 border border-gray-100">
         <h2 class="text-3xl font-black text-gray-800 mb-6 text-center">
-            {% if object %}📝 Edit Your Review{% else %}✍️ Write a Review{% endif %}
+            📝 Add book
         </h2>
 
-        <form method="POST" class="space-y-6">
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
             
             <div class="[&>p>label]:block [&>p>label]:text-sm [&>p>label]:font-bold [&>p>label]:mb-2 
@@ -20,13 +21,13 @@
 
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
                 <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg">
-                    Save Review
+                    Save Book
                 </button>
                 
-                <a href="{% if object %}{% url 'book-detail' object.book.pk %}{% else %}{% url 'book-detail' view.kwargs.pk %}{% endif %}" 
-   class="flex-1 bg-gray-100 hover:bg-gray-200 text-center text-gray-700 font-bold py-3 px-6 rounded-xl transition no-underline">
-    Cancel
-</a>
+                <a href="{% url 'book-list' %}" 
+                   class="flex-1 bg-gray-100 hover:bg-gray-200 text-center text-gray-700 font-bold py-3 px-6 rounded-xl transition no-underline">
+                    Cancel
+                </a>
             </div>
         </form>
     </div>

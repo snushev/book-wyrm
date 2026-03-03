@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from .models import Book, Review
-from .forms import ReviewForm
+from .forms import BookForm, ReviewForm, SearchForm 
 
 # Create your views here.
 
@@ -14,6 +14,15 @@ class BookListView(ListView):
     queryset = Book.objects.all()
     template_name = 'books/book_list.html'
     context_object_name = 'books'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_text = self.request.GET.get("query")
+
+        if search_text:
+            return queryset.filter(title__icontains=search_text) | queryset.filter(author__icontains=search_text)
+        
+        return queryset
     
 class BookDetailView(DetailView):
     model = Book
@@ -28,6 +37,19 @@ class BookDetailView(DetailView):
                 user=self.request.user
             ).exists()
         return context
+    
+class BookCreateView(LoginRequiredMixin, CreateView):
+    form_class = BookForm
+    model = Book
+    template_name = 'books/book_add.html'
+
+    def form_valid(self, form):
+        form.instance.added_by = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        pk = self.object.pk
+        return reverse('book-detail', kwargs={'pk': pk})
 
 # Review views
 

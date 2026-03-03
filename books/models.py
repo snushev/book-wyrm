@@ -13,9 +13,11 @@ class Genre(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
+    year_published = models.IntegerField()
     description = models.TextField()
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name='books')
     cover = models.ImageField(upload_to='covers', null=True, blank=True)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='added_books')
 
     def rating_avg(self):
         return Review.objects.filter(book=self).aggregate(

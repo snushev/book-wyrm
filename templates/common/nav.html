@@ -1,8 +1,12 @@
 <nav class="bg-blue-600 p-4 text-white shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <a href="{% url 'book-list' %}" class="text-2xl font-bold">📚 BookWyrm</a>
+            {% include "common/search.html" %}
             <div>
                 {% if user.is_authenticated %}
+                    <a href="{% url 'book-add' %}" class="bg-green-500 hover:bg-green-400 px-3 py-1 mr-3 rounded shadow-sm transition">
+                        + Add book
+                    </a>
                     <span class="mr-4">Hello, {{ user.username }}!</span>
                     <form action="{% url 'logout' %}" method="post" class="inline">
                         {% csrf_token %}

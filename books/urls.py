@@ -5,6 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.BookListView.as_view(), name='book-list'),
+    path('add/', views.BookCreateView.as_view(), name='book-add'),
     path('<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
     path('<int:pk>/review/', views.ReviewCreateView.as_view(), name='add-review'),
     path('review/<int:pk>/update/', views.ReviewUpdateView.as_view(), name='update-review'),
